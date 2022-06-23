@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Rechercher une recette</title>
+</head>
+
+<body>
+    <header class="container">
+        <div class="row d-flex flex-wrap justify-content-center">
+            <img class="logo mb-5 mt-3" src="./assets/logo.svg" alt="">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Rechercher une recette"
+                    aria-label="Rechercher une recette" aria-describedby="recipe-search">
+                <button aria-label="Rechercher une recette" class="btn btn-outline-secondary" type="button"
+                    id="button-addon2"><i class="bi bi-search"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <section class="container">
+        <div class="row mb-5 d-flex flex-wrap">
+            <div class="btn-group">
+                <button id="ingredient-button" type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Ingredients
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+            </div>
+            <div class="btn-group">
+                <button id="appareils-button" type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Appareils
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+            </div>
+            <div class="btn-group">
+                <button id="ustensiles-button" type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Ustensiles
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="recipe-list" class="row row-cols-1 row-cols-md-3 g-4"></div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+    <script src="./script/index.js" type="module"></script>
+</body>
+
+</html>

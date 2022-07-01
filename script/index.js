@@ -3,6 +3,9 @@ import { recipes as allRecipes } from "./recipe.js";
 function init() {
     //Génération des recettes au premier chargement de la page
     recipeGenerate(allRecipes);
+    applianceGenerate(allRecipes);
+    ustensilsGenerate(allRecipes);
+    ingredientsGenerate(allRecipes);
 
     //Fonction de recherche
     const searchForm = document.querySelector(".form-control");
@@ -58,48 +61,82 @@ function recipeGenerate(recipes) {
     recipeList.innerHTML = recipeHtml.join('')
 }
 
+function ingredientsGenerate(recipes) {
+    const integrationIngredients = document.getElementById("allIngredients");
+    const ingredientsArray = [];
+
+    recipes.forEach(recipe => {
+        recipe.ingredients.forEach(allIngredients => {
+            if (!ingredientsArray.includes(`<li><a class="dropdown-item" href="#">${allIngredients.ingredient}</a></li>`)) {
+                let itemIngredient = `<li><a class="dropdown-item" href="#">${allIngredients.ingredient}</a></li>`;
+                ingredientsArray.push(itemIngredient)
+            }
+        });
+    });
+
+    integrationIngredients.innerHTML = ingredientsArray.join('')
+}
+
+function ustensilsGenerate(recipes) {
+    const integrationUstensils = document.getElementById("allUstensils");
+    const ustensilsArray = [];
+
+    recipes.forEach(recipe => {
+        recipe.ustensils.forEach(ustensils => {
+            if (!ustensilsArray.includes(`<li><a class="dropdown-item" href="#">${ustensils}</a></li>`)) {
+                let itemUstensil = `<li><a class="dropdown-item" href="#">${ustensils}</a></li>`;
+                ustensilsArray.push(itemUstensil)
+            }
+        });
+    });
+
+    integrationUstensils.innerHTML = ustensilsArray.join('')
+}
+
+function applianceGenerate(recipes) {
+    const integrationAppliances = document.getElementById("allAppliances");
+    const appliancesArray = [];
+
+    recipes.forEach(recipe => {
+        if (!appliancesArray.includes(`<li><a class="dropdown-item" href="#">${recipe.appliance}</a></li>`)) {
+            let itemAppliance = `<li><a class="dropdown-item" href="#">${recipe.appliance}</a></li>`;
+            appliancesArray.push(itemAppliance)
+        }
+    });
+
+    integrationAppliances.innerHTML = appliancesArray.join('')
+}
+
 function searchRecipe(searchForm) {
     //Regénération de l'ensemble des recettes si deux lettres ou moins est tapé dans la barre de recherche
-    if (searchForm.value.length <= 2) {
+    if (searchForm.value.length < 3) {
         recipeGenerate(allRecipes);
         return;
     }
 
-    //Tableau comprenant l'ensemble des recettes de la recherche
-    let resultSearch = [];
+    const searchValueLowerCase = searchForm.value.toLowerCase()
 
-    //Boucle pour fouiller l'ensemble des recettes
-    allRecipes.forEach(recipe => {
-        //Valeur du champs de recherche de l'input mise en minuscule pour éviter que la case influe sur la recherche
-        //Sinon certaines recettes ne s'afficheront pas suivant la casse utilisée pour la recherche 
-        const searchValueLowerCase = searchForm.value.toLowerCase()
-
-        //Valeur true/false pour valider si la recette actuelle (recipe) est bien comprise dans la recherche effectué
-        //En faisant la recherche avec juste le nom, je n'ai pas eu besoin de tout cela et je faisais juste un push dans le tableau "resultSearch" de la recette
+    //Boucle pour fouiller l'ensemble des recettes et trouver les recettes correspondant à la recherche
+    let resultSearch = allRecipes.filter(recipe => {
         let search = false;
 
-        //Boucle pour permettre de comparer chaque ingrédient de la recette à la valeur, en même temps que le nom et la description
         recipe.ingredients.forEach(ingredientElement => {
-            //if pour comparer le nom de la recette, chaques ingredients de la recette et la description quand la boucle de lance
-            //Tout ça en mettant ces valeurs en minuscule pour éviter que cela perturbe la recherche avec la casse utilisé
             if (recipe.name.toLowerCase().includes(searchValueLowerCase)
                 || ingredientElement.ingredient.toLowerCase().includes(searchValueLowerCase)
                 || recipe.description.toLowerCase().includes(searchValueLowerCase)) {
-                //Valeur "search" créé car par rapport à cette boucle vu qu'il faut aussi regarder si chaque ingrédient correspond à la recherche ou non
-                //A chaque boucle où on peut voir un ingrédient, il peut y avoir un redit par rapport à l'ingrédient précédent
-                //C'est pour éviter les doublons dans l'affichage des recettes
                 search = true;
             }
         });
 
-        //Mise de la recette (recipe) dans le tableau de résultat des recherches si elle correspond bien à ce que l'utilisateur recherche
         if (search === true) {
-            resultSearch.push(recipe);
+            return recipe;
         }
     });
 
-    //Regénération de la liste des recettes à afficher en dessous
     recipeGenerate(resultSearch);
+    applianceGenerate(resultSearch);
+    ustensilsGenerate(resultSearch);
+    ingredientsGenerate(resultSearch);
 }
 
 init();

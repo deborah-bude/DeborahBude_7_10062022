@@ -8,7 +8,7 @@ ol {
 
 .card-img-top {
     height: 200px;
-    background: #C7BEBE;
+    background: #c7bebe;
 }
 
 .logo {
@@ -20,18 +20,20 @@ ol {
     padding-left: 10px;
 }
 
-#ingredient-button, #ingredient-button + .dropdown-menu {
+#ingredient-button,
+#ingredient-button + .dropdown-menu {
     background: #3282f7;
     color: #fff;
 }
 
-#appareils-button, #appareils-button + .dropdown-menu {
-    background: #68D9A4;
+#appareils-button,
+#appareils-button + .dropdown-menu {
+    background: #68d9a4;
     color: #fff;
 }
 
-
-#ustensiles-button, #ustensiles-button + .dropdown-menu {
-    background: #ED6454;
+#ustensiles-button,
+#ustensiles-button + .dropdown-menu {
+    background: #ed6454;
     color: #fff;
 }

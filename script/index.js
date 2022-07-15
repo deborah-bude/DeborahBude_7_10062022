@@ -1,4 +1,5 @@
 import { getRecipes } from "./recipes.js";
+import { searchState } from "./state.js";
 
 function init() {
     //Génération des recettes au premier chargement de la page
@@ -9,9 +10,16 @@ function init() {
 
     //Fonction de recherche
     const searchForm = document.querySelector(".form-control");
-    searchForm.addEventListener("input", (e) => searchRecipe(searchForm))
+    searchForm.addEventListener("input", (e) => {
+        searchState.updateSearchQuery(e.target.value.toLowerCase())
+        search()
+        //searchRecipe(searchForm)
+    })
 
-    searchByIngredients();
+    document.querySelectorAll("#allIngredients li").forEach(el => el.addEventListener("click", (e) => { 
+        searchState.addIngredient(e.target.innerText);
+        search();
+    }));
 }
 
 function recipeGenerate(recipes) {
@@ -112,52 +120,109 @@ function applianceGenerate(recipes) {
     integrationAppliances.innerHTML = appliancesArray.join('')
 }
 
-function searchRecipe(searchForm) {
-    //Regénération de l'ensemble des recettes si deux lettres ou moins est tapé dans la barre de recherche
-    if (searchForm.value.length < 3) {
-        recipeGenerate(getRecipes());
-        return;
+function searchRecipes(recipes) {
+    const state = searchState.getState();
+    const query = state.query;
+
+    if (query.length < 3) {
+        return recipes;
     }
 
-    const searchValueLowerCase = searchForm.value.toLowerCase()
+    const queryLowerCase = query.toLowerCase()
 
-    //Boucle pour fouiller l'ensemble des recettes et trouver les recettes correspondant à la recherche
-    const resultSearch = getRecipes().filter(recipe => {
-        return recipe.name.toLowerCase().includes(searchValueLowerCase)
-            || recipe.ingredientsAsString.toLowerCase().includes(searchValueLowerCase)
-            || recipe.description.toLowerCase().includes(searchValueLowerCase);
+    const resultSearch = recipes.filter(recipe => {
+        return recipe.name.toLowerCase().includes(queryLowerCase)
+            || recipe.ingredientsAsString.toLowerCase().includes(queryLowerCase)
+            || recipe.description.toLowerCase().includes(queryLowerCase);
     });
 
-    recipeGenerate(resultSearch);
-    applianceGenerate(resultSearch);
-    ustensilsGenerate(resultSearch);
-    ingredientsGenerate(resultSearch);
-
-    searchByIngredients();
+    return resultSearch;
 }
 
-function searchByIngredients() {
+function searchRecipesByIngredients(recipes) {
+    if (searchState.state.ingredients.length === 0) {
+        return recipes;
+    }
+
+    const resultSearch = recipes.filter(recipe => {
+        return recipe.ingredientsAsString.toLowerCase().includes(searchState.state.ingredients[0].toLowerCase());
+    });
+
     const elementSelection = document.getElementById("elementSelection");
-    const allIngredients = document.getElementById("allIngredients");
+    const allIngredientsElement = []
+    searchState.state.ingredients.forEach(ingredient => {
+        resultSearch = recipes.filter(recipe => {
+            return recipe.ingredientsAsString.toLowerCase().includes(searchState.state.ingredients[0].toLowerCase());
+        });
 
-    const allIngredientsList = document.querySelectorAll("#allIngredients li");
-    const allAppliancesList = document.querySelectorAll("#allAppliances li");
-    const allUstensilsList = document.querySelectorAll("#allUstensils li");
-
-    allIngredientsList.forEach(ingredientList => {
-        ingredientList.addEventListener("click", () => {
-            elementSelection.appendChild(ingredientList);
-
-            const elementSelectionList = document.querySelectorAll("#elementSelection li");
-
-            elementSelectionList.forEach(elementList => {
-                elementList.addEventListener("click", () => {
-                    allIngredients.appendChild(elementList);
-                }) 
-            });
-        })
+        const ingredientList = `<li><a class="dropdown-item" href="#">${ingredient}</a></li>`;
+        allIngredientsElement.push(ingredientList)
     });
+    allIngredientsElement.join('');
+    elementSelection.innerHTML = allIngredientsElement;
+
+    return resultSearch
 }
+
+function search() {
+
+    const recipesFromTextSearch = searchRecipes(getRecipes())
+    const recipesFromIngredientsSearch = searchRecipesByIngredients(recipesFromTextSearch)
+
+    const resultFinal = recipesFromIngredientsSearch;
+    recipeGenerate(resultFinal);
+    applianceGenerate(resultFinal);
+    ustensilsGenerate(resultFinal);
+    ingredientsGenerate(resultFinal);
+}
+
+// function searchRecipe(searchForm) {
+//     //Regénération de l'ensemble des recettes si deux lettres ou moins est tapé dans la barre de recherche
+//     if (searchForm.value.length < 3) {
+//         recipeGenerate(getRecipes());
+//         return;
+//     }
+
+//     const searchValueLowerCase = searchForm.value.toLowerCase()
+
+//     //Boucle pour fouiller l'ensemble des recettes et trouver les recettes correspondant à la recherche
+//     const resultSearch = getRecipes().filter(recipe => {
+//         return recipe.name.toLowerCase().includes(searchValueLowerCase)
+//             || recipe.ingredientsAsString.toLowerCase().includes(searchValueLowerCase)
+//             || recipe.description.toLowerCase().includes(searchValueLowerCase);
+//     });
+
+//     recipeGenerate(resultSearch);
+//     applianceGenerate(resultSearch);
+//     ustensilsGenerate(resultSearch);
+//     ingredientsGenerate(resultSearch);
+
+//     searchByIngredients();
+// }
+
+// function searchByIngredients() {
+//     const elementSelection = document.getElementById("elementSelection");
+//     const allIngredients = document.getElementById("allIngredients");
+
+//     const allIngredientsList = document.querySelectorAll("#allIngredients li");
+
+//     allIngredientsList.forEach(ingredientList => {
+//         ingredientList.addEventListener("click", () => {
+//             elementSelection.appendChild(ingredientList);
+
+//             // Mettre à jour le state et relancer la recherche
+//             searchState.addIngredient(ingredientList.textContent.toLowerCase())
+//             //search()
+
+//             const elementSelectionList = document.querySelectorAll("#elementSelection li");
+
+//             elementSelectionList.forEach(elementList => {
+//                 elementList.addEventListener("click", () => {
+//                     allIngredients.appendChild(elementList);
+//                 })
+//             });
+//         })
+//     });
+// }
 
 init();
-

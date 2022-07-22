@@ -16,10 +16,24 @@ function init() {
         //searchRecipe(searchForm)
     })
 
-    document.querySelectorAll("#allIngredients li").forEach(el => el.addEventListener("click", (e) => { 
+    /*document.querySelectorAll("#allIngredients li").forEach(el => el.addEventListener("click", (e) => { 
         searchState.addIngredient(e.target.innerText);
         search();
-    }));
+    }));*/
+
+    document.querySelector("#allIngredients").addEventListener("click", (e) => {
+        if (e.target.tagName === 'A') {
+            searchState.addIngredient(e.target.innerText);
+            search();
+        }
+    })
+
+    document.querySelector("#elementSelection").addEventListener("click", (e) => {
+        if (e.target.tagName === 'A') {
+            searchState.removeIngredient(e.target.innerText);
+            search();
+        }
+    })
 }
 
 function recipeGenerate(recipes) {
@@ -72,6 +86,9 @@ function recipeGenerate(recipes) {
 }
 
 function ingredientsGenerate(recipes) {
+    // Nettoyer les event listeners
+    //document.querySelectorAll("#allIngredients li").forEach(el => el.removeEventListener('click', console.log));
+
     const integrationIngredients = document.getElementById("allIngredients");
     const ingredientsArray = [];
 
@@ -140,24 +157,37 @@ function searchRecipes(recipes) {
 }
 
 function searchRecipesByIngredients(recipes) {
-    if (searchState.state.ingredients.length === 0) {
+    const elementSelection = document.getElementById("elementSelection");
+    const allIngredientsElement = []
+
+    if (searchState.getState().ingredients.length === 0) {
+        elementSelection.innerHTML = ''
         return recipes;
     }
 
-    const resultSearch = recipes.filter(recipe => {
-        return recipe.ingredientsAsString.toLowerCase().includes(searchState.state.ingredients[0].toLowerCase());
-    });
+    let resultSearch = []
 
-    const elementSelection = document.getElementById("elementSelection");
-    const allIngredientsElement = []
-    searchState.state.ingredients.forEach(ingredient => {
-        resultSearch = recipes.filter(recipe => {
-            return recipe.ingredientsAsString.toLowerCase().includes(searchState.state.ingredients[0].toLowerCase());
+    searchState.getState().ingredients.forEach(ingredient => {
+        const source = resultSearch.length === 0 ? recipes : resultSearch
+        resultSearch = source.filter(recipe => {
+            return recipe.ingredientsAsString.includes(ingredient);
         });
+        /*if (resultSearch.length === 0) {
+            resultSearch = recipes.filter(recipe => {
+                return recipe.ingredientsAsString.includes(ingredient);
+            });
+        } else {
+            resultSearch = resultSearch.filter(recipe => {
+                return recipe.ingredientsAsString.includes(ingredient);
+            });
+        }*/
+    
 
         const ingredientList = `<li><a class="dropdown-item" href="#">${ingredient}</a></li>`;
         allIngredientsElement.push(ingredientList)
     });
+    
+    console.log(allIngredientsElement)
     allIngredientsElement.join('');
     elementSelection.innerHTML = allIngredientsElement;
 
@@ -165,7 +195,6 @@ function searchRecipesByIngredients(recipes) {
 }
 
 function search() {
-
     const recipesFromTextSearch = searchRecipes(getRecipes())
     const recipesFromIngredientsSearch = searchRecipesByIngredients(recipesFromTextSearch)
 

@@ -24,13 +24,18 @@ class SearchState {
     }
 
     addIngredient(ingredient) {
-        this.state.ingredients.push(ingredient)
-        // search()
+        if (!this.state.ingredients.includes(ingredient)) {
+            this.state.ingredients.push(ingredient)
+        }
     }
 
     removeIngredient(ingredient) {
-
+        const indexToDelete = this.state.ingredients.indexOf(ingredient);
+        this.state.ingredients.splice(indexToDelete, 1);
     }
 }
 
 export const searchState = new SearchState()
+
+// TODO : à supprimer
+window.searchState = searchState

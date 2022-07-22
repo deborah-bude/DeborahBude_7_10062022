@@ -48,6 +48,17 @@ ol {
     padding-left: 10px;
 }
 
+#ingredient-button.show {
+    visibility: hidden;
+}
+#ingredient-button + input  {
+    display: none;
+}
+
+#ingredient-button.show + input  {
+    display: block;
+}
+
 #ingredient-button,
 #ingredient-button + .dropdown-menu {
     background: #3282f7;

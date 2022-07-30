@@ -28,30 +28,26 @@
     </header>
 
     <section class="container">
-        <ul id="elementSelection" class="d-flex flex-wrap mb-2"></ul>
+        <ul id="ingredientsSelection" class="d-flex flex-wrap mb-2"></ul>
+        <ul id="appliancesSelection" class="d-flex flex-wrap mb-2"></ul>
+        <ul id="ustensilsSelection" class="d-flex flex-wrap mb-2"></ul>
         <div class="row mb-5 d-flex flex-wrap">
             <div class="btn-group">
-               
-                    <button id="ingredient-button" type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    Ingredients
-                    </button>
-                    <input type="text" placeholder="coucou">
-                
+                <input type="text" id="ingredient-button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false" placeholder="Ingredients">
+                <i class="bi bi-caret-down-fill"></i>
                 <ul id="allIngredients" class="dropdown-menu"></ul>
             </div>
             <div class="btn-group">
-                <button id="appareils-button" type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    Appareils
-                </button>
+                <input type="text" id="appareils-button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false" placeholder="Appareils">
+                <i class="bi bi-caret-down-fill"></i>
                 <ul id="allAppliances" class="dropdown-menu"></ul>
             </div>
             <div class="btn-group">
-                <button id="ustensiles-button" type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    Ustensiles
-                </button>
+                <input type="text" id="ustensiles-button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false" placeholder="Ustensiles">
+                <i class="bi bi-caret-down-fill"></i>
                 <ul id="allUstensils" class="dropdown-menu"></ul>
             </div>
         </div>

@@ -217,11 +217,20 @@ function searchRecipes(recipes) {
 
     const queryLowerCase = query.toLowerCase()
 
-    const resultSearch = recipes.filter(recipe => {
-        return recipe.name.toLowerCase().includes(queryLowerCase)
-            || recipe.ingredientsAsString.toLowerCase().includes(queryLowerCase)
-            || recipe.description.toLowerCase().includes(queryLowerCase);
+    const resultSearch = recipes.forEach(recipe => {
+        let resultArray = [];
+        if (recipe.name.toLowerCase().includes(queryLowerCase)
+        || recipe.ingredientsAsString.toLowerCase().includes(queryLowerCase)
+        || recipe.description.toLowerCase().includes(queryLowerCase)) {
+            resultArray.push(recipe);
+        }
+        return resultSearch;
     });
+    // const resultSearch = recipes.filter(recipe => {
+    //     return recipe.name.toLowerCase().includes(queryLowerCase)
+    //         || recipe.ingredientsAsString.toLowerCase().includes(queryLowerCase)
+    //         || recipe.description.toLowerCase().includes(queryLowerCase);
+    // });
 
     return resultSearch;
 }

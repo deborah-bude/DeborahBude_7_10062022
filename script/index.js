@@ -224,8 +224,9 @@ function searchRecipes(recipes) {
         || recipe.description.toLowerCase().includes(queryLowerCase)) {
             resultArray.push(recipe);
         }
-        return resultSearch;
+        return resultArray;
     });
+
     // const resultSearch = recipes.filter(recipe => {
     //     return recipe.name.toLowerCase().includes(queryLowerCase)
     //         || recipe.ingredientsAsString.toLowerCase().includes(queryLowerCase)

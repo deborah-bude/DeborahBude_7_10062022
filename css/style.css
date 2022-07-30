@@ -60,6 +60,7 @@ ol {
     right: 16px;
     color: #fff;
     z-index: 2;
+    pointer-events: none;
 }
 
 .btn-group .btn::placeholder {

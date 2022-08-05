@@ -23,6 +23,17 @@ class SearchState {
         this.state.query = query
     }
 
+    /**
+     * 
+     * @param {String} item 
+     * @param {'ingredients' | 'ustensils' | 'appliances'} typeTag 
+     */
+    addTag(item, typeTag = 'ingredients') {
+        if (!this.state[typeTag].includes(item)) {
+            this.state[typeTag].push(item)
+        }
+    }
+
     //Mise à jour des ingrédients
     addIngredient(ingredient) {
         if (!this.state.ingredients.includes(ingredient)) {

@@ -10,7 +10,7 @@ export function search() {
     const recipesFromAppliancesSearch = searchRecipesByAppliances(recipesFromIngredientsSearch)
     const recipesFromUstensilsSearch = searchRecipesByUstensils(recipesFromAppliancesSearch)
 
-    tagGenerate(recipesFromUstensilsSearch);
+    tagGenerate();
 
     const resultFinal = recipesFromUstensilsSearch;
     recipeGenerate(resultFinal);

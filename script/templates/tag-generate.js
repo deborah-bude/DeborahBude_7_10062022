@@ -1,5 +1,4 @@
-export function tagGenerate(recipes) {
-    // console.log('hello');
+export function tagGenerate() {
     const elementsSelection = document.getElementById("elementsSelection");
     const allElements = [];
 
@@ -30,8 +29,7 @@ export function tagGenerate(recipes) {
         });
     }
 
-    allElements.join('');
-    elementsSelection.innerHTML = allElements;
+    elementsSelection.innerHTML = allElements.join('');
 
     document.querySelector("#ingredient-button").value = "";
     document.querySelector("#appareils-button").value = "";

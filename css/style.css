@@ -6,34 +6,54 @@ ol {
     margin: 0;
 }
 
-#ingredientsSelection a {
-    position: relative;
+#elementsSelection li {
+    margin-right: 10px;
 }
 
-.ingredient-item, .appliance-item, .ustensil-item {
-    margin-right: 10px;
+#elementsSelection li:last-child {
+    margin-right: 0;
+}
+
+#elementsSelection a {
+    position: relative;
     padding: 0.375rem 0.75rem;
     border-radius: 0.375rem;
     display: flex;
     align-items: flex-end;
+    transition: 0.5s;
 }
 
-.ingredient-item {
+.ingredient-item a {
     background: #3282f7;
     color: #fff;
 }
 
-.appliance-item {
+.appliance-item a {
     background: #68d9a4;
     color: #fff;
 }
 
-.ustensil-item {
+.ustensil-item a {
     background: #ed6454;
     color: #fff;
 }
 
-.ingredient-item::after, .appliance-item::after, .ustensil-item::after {
+.ingredient-item a:hover {
+    background: #2868c9;
+    color: #fff;
+}
+
+.appliance-item a:hover {
+    background: #5ec092;
+    color: #fff;
+}
+
+.ustensil-item a:hover {
+    background: #b94d41;
+    color: #fff;
+}
+
+#elementsSelection a::after, #elementsSelection a::after, #elementsSelection a::after {
     display: inline-block;
     content: "";
     vertical-align: -0.125em;
@@ -60,7 +80,6 @@ ol {
     right: 16px;
     color: #fff;
     z-index: 2;
-    pointer-events: none;
 }
 
 .btn-group .btn::placeholder {
@@ -108,4 +127,8 @@ ol {
     color: #fff;
     width: 200px;
     white-space: inherit;
+}
+
+.no-result {
+    font-weight: 500;
 }

@@ -13,10 +13,16 @@ export function search() {
     tagGenerate();
 
     const resultFinal = recipesFromUstensilsSearch;
-    recipeGenerate(resultFinal);
-    applianceGenerate(resultFinal);
-    ustensilsGenerate(resultFinal);
-    ingredientsGenerate(resultFinal);
+
+    if (resultFinal.length !== 0) {
+        recipeGenerate(resultFinal);
+        applianceGenerate(resultFinal);
+        ustensilsGenerate(resultFinal);
+        ingredientsGenerate(resultFinal);
+    } else {
+        console.log("tableau vide");
+        document.getElementById("recipe-list").innerHTML = "<p class='no-result'>Aucune recette correspond à votre recherche. Vous pouvez vous pouvez chercher « tarte aux pommes », « poisson », etc.</p>";
+    }
 
     document.querySelector("#ingredient-button").addEventListener("input", (e) => {
         searchIngredients(e.target.value, resultFinal);

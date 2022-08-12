@@ -20,7 +20,6 @@ export function search() {
         ustensilsGenerate(resultFinal);
         ingredientsGenerate(resultFinal);
     } else {
-        console.log("tableau vide");
         document.getElementById("recipe-list").innerHTML = "<p class='no-result'>Aucune recette correspond à votre recherche. Vous pouvez vous pouvez chercher « tarte aux pommes », « poisson », etc.</p>";
     }
 
